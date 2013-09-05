@@ -6,6 +6,7 @@
 	"dependencies":{
 		"express" : "3.x",
 		"passport" : "x",
-		"mongodb" : "x"
+		"mongodb" : "x",
+		"socket.io" : "x"
 	}
 }

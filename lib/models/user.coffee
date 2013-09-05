@@ -3,9 +3,18 @@ getCollection = () ->
   return mongo.db.collection 'users'
 
 class User
-  constructor: (jiraData) ->
-    @name = jiraData.name
-    @email = jiraData.emailAddress
+  constructor: (data) ->
+    @name = data.name
+    @email = data.email
+    @heroes = {}
+
+  @FromJira: (jiraData) ->
+    return new User
+      name: jiraData.name
+      email: jiraData.emailAddress
+
+  hasHero: (id) ->
+    return @heroes[id]?
 
   save: (cb) ->
     users = getCollection()
@@ -16,7 +25,8 @@ class User
 
   @FindOne: (name, cb) ->
     users = getCollection()
-    return users.findOne {name: name}, cb
+    return users.findOne {name: name}, (err, data) ->
+      cb err, new User(data)
 
   @GetAll: (cb) ->
     users = getCollection()
