@@ -12,8 +12,6 @@ exports.redirectToLogin = (res) ->
   res.redirect '/user/login.html'
 
 exports.init = (app) ->
-  console.log 'Initializing user controller...'
-
   app.get '/user/logout', (req, res) ->
     req.session.username = null
     req.session.password = null
@@ -41,3 +39,5 @@ exports.init = (app) ->
         res.send req.session.user
     else
       res.redirect '/user/login.html'
+
+  console.log 'Initialized user controller.'
