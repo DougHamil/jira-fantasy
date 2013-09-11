@@ -1,16 +1,25 @@
 require.config
   shim:
-    easel:
-      exports: 'createjs'
+    pixi:
+      exports: 'PIXI'
   baseUrl: '/js'
   paths:
     jquery: 'lib/jquery'
-    easel: 'lib/easel'
+    pixi: 'lib/pixi'
 
-
-require ['jquery', 'easel'], ($, easel) ->
+require ['game/hero', 'jquery', 'pixi'], (Hero, $) ->
   $(document).ready ->
-    stage = new createjs.Stage('editCanvas')
-    stage.addChild(new createjs.Shape()).setTransform(100,100).graphics.f("red").dc(0,0,50)
-    stage.update()
+    stage = new PIXI.Stage(0x66FF99)
+    renderer = PIXI.autoDetectRenderer(400, 300)
+    document.body.appendChild(renderer.view)
 
+    hero = new Hero
+      skincolor: "#CCC"
+      shirtcolor: "#0C0"
+
+    hero = stage.addChild()
+
+    requestAnimFrame( animate )
+    animate ->
+      requestAnimFrame(animate)
+      renderer.render(stage)

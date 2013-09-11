@@ -1,3 +1,3 @@
 #!/bin/bash
-
-coffee -wc ./public
+coffee -wc ./public &
+nodemon server.coffee

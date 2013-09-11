@@ -2,23 +2,33 @@
 (function() {
   require.config({
     shim: {
-      easel: {
-        exports: 'createjs'
+      pixi: {
+        exports: 'PIXI'
       }
     },
     baseUrl: '/js',
     paths: {
       jquery: 'lib/jquery',
-      easel: 'lib/easel'
+      pixi: 'lib/pixi'
     }
   });
 
-  require(['jquery', 'easel'], function($, easel) {
+  require(['game/hero', 'jquery', 'pixi'], function(Hero, $) {
     return $(document).ready(function() {
-      var stage;
-      stage = new createjs.Stage('editCanvas');
-      stage.addChild(new createjs.Shape()).setTransform(100, 100).graphics.f("red").dc(0, 0, 50);
-      return stage.update();
+      var hero, renderer, stage;
+      stage = new PIXI.Stage(0x66FF99);
+      renderer = PIXI.autoDetectRenderer(400, 300);
+      document.body.appendChild(renderer.view);
+      hero = new Hero({
+        skincolor: "#CCC",
+        shirtcolor: "#0C0"
+      });
+      hero = stage.addChild();
+      requestAnimFrame(animate);
+      return animate(function() {
+        requestAnimFrame(animate);
+        return renderer.render(stage);
+      });
     });
   });
 
