@@ -1,6 +1,5 @@
 mongoose = require 'mongoose'
-Schema = mongoose.Schema
-String = Schema.String
+Schema   = mongoose.Schema
 
 schema = new Schema
   name:
@@ -10,8 +9,8 @@ schema = new Schema
     type: String
     default: 'mage'
   stats:
-    strength: Number,
-    magic: Number,
+    strength: Number
+    magic: Number
     stealth: Number
 
 Hero = mongoose.model('Hero', schema)

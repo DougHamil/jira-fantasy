@@ -1,13 +1,13 @@
-secret = 'JIRA_HERO_SECRET'
-mongoose = require 'mongoose'
-express = require 'express'
-sessionStore = new express.session.MemoryStore()
-cookieParser = express.cookieParser(secret)
-jiraapi = require './lib/jira/api'
-console.log 'here'
+mongoose       = require 'mongoose'
+express        = require 'express'
+jiraapi        = require './lib/jira/api'
 userController = require './lib/controllers/user'
 heroController = require './lib/controllers/hero'
-gameServer = require './game/server'
+gameServer     = require './game/server'
+
+secret       = 'JIRA_HERO_SECRET'
+sessionStore = new express.session.MemoryStore()
+cookieParser = express.cookieParser(secret)
 
 mongoose.connect('mongodb://localhost:27017/test')
 
@@ -20,6 +20,19 @@ db.once 'open', ->
   app.use express.cookieParser()
   app.use express.session({store:sessionStore, secret: secret, key:'express.sid'})
   app.use express.static('public')
+
+  app.all '/api/*', (req, res, next) ->
+    console.log req.path
+    if req.path != '/api/user/login'
+      if not req.session.user?
+        console.log "API request attempt for invalid user"
+        res.redirect '/user/info'
+      else
+        req.user = req.session.user
+        next()
+    else
+      console.log 'Login request'
+      next()
 
   # Init controllers
   userController.init app
