@@ -7,6 +7,8 @@
 		"express" : "3.x",
 		"passport" : "x",
 		"mongodb" : "x",
-		"socket.io" : "x"
+		"socket.io" : "x",
+		"session.socket.io": "x",
+		"mongoose": "x"
 	}
 }

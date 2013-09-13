@@ -1,12 +1,9 @@
 class Game
   constructor: (@host) ->
-    @players = []
+    @heroes = []
+    @heroes.push(@host)
 
-  onHeroJoined: (player, hero) ->
-    @players.push
-      player:player
-      hero: hero
-
+  onHeroJoined: (hero) ->
+    @heroes.push(hero)
 
 module.exports = Game
-

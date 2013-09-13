@@ -1,14 +1,18 @@
-mongo = require '../../mongo'
+mongoose = require 'mongoose'
+Schema = mongoose.Schema
+String = Schema.String
 
-collection = () ->
-  return mongo.db.collection 'heroes'
+schema = new Schema
+  name:
+    type: String
+    default: 'Unnamed'
+  heroType:
+    type: String
+    default: 'mage'
+  stats:
+    strength: Number,
+    magic: Number,
+    stealth: Number
 
-class Hero
-  constructor: (@type, @name)->
-
-  @FindOne: (id, cb) ->
-    heroes = collection()
-    heroes.findone id, cb
-    return
-
+Hero = mongoose.model('Hero', schema)
 module.exports = Hero

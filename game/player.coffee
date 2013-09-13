@@ -1,9 +1,16 @@
-Hero = require '../lib/models/heroes/hero'
+Hero = require('./hero')
 
 class Player
-  constructor: (@socket) ->
+  constructor: (@user, @socket) ->
     # TODO: attach event listeners to socket events
-  getHero: (id, cb) ->
+  hasHero: (id) ->
+    return @user.heroes[id]?
+  getHero: (id) ->
+    if id? and @hasHero(id)
+      return Hero.FromModel(@, @socket, @getHeroModel(id))
+    return null
+  getHeroModel: (id) ->
+    return @users.heroes[id]
 
 
 
