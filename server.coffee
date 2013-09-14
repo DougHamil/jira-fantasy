@@ -32,6 +32,7 @@ db.once 'open', ->
         next()
     else
       console.log 'Login request'
+      console.log next
       next()
 
   # Init controllers

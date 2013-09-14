@@ -18,6 +18,7 @@ exports.init = (app) ->
     res.send 'Successfully logged out.'
 
   app.post 'api/user/login', (req, res) ->
+    console.log 'Attempting to log user in: '+req.body.username
     req.session.username = req.body.username
     req.session.password = req.body.password
 

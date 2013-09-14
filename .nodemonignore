@@ -1,4 +1,5 @@
 /public/*
+/.git/*
 *.swp
 *~
 *.swx

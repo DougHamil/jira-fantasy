@@ -2,7 +2,7 @@ http = require 'http'
 
 exports.getUser = (session, cb) ->
   http.request
-    host: 'jira'
+    host: 'jira:8080' # 'jira'
     path: '/rest/api/2/user?username='+session.username
     headers:
       'Authorization': "Basic " + new Buffer(session.username + ":" + session.password).toString('base64')
