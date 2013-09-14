@@ -1,6 +1,7 @@
 UserController = require './user'
 Hero           = require '../models/hero'
 HeroValidator  = require '../validators/hero'
+fs             = require 'fs'
 
 exports.init = (app) ->
 
@@ -29,7 +30,6 @@ exports.init = (app) ->
         else
           console.log "Successfully updated hero "+req.params.id
 
-
   app.get 'api/hero/:id', (req, res) ->
     user = req.user
 
@@ -40,6 +40,16 @@ exports.init = (app) ->
         if err?
           return UserController
         return hero
+
+  # Returns meta-data about hero types
+  app.get 'api/meta/hero', (req, res) ->
+    fs.readdir '../../game/heroes', (err, files) ->
+      if err?
+        return
+      else
+        metadatas = []
+        for file in files
+          metadatas.push(require(file).GetMetaData())
 
 
   console.log 'Initialized hero controller.'

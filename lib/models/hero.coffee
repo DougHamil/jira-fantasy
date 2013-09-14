@@ -10,7 +10,7 @@ schema = new Schema
     default: 'mage'
   stats:
     strength: Number
-    magic: Number
+    mana: Number
     stealth: Number
 
 Hero = mongoose.model('Hero', schema)
