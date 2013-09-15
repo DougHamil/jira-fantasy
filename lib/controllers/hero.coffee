@@ -5,7 +5,7 @@ fs             = require 'fs'
 
 exports.init = (app) ->
 
-  app.post 'api/hero/:id/save', (req, res) ->
+  app.post '/api/hero/:id/save', (req, res) ->
     hero = new Hero(req.body)
 
     if not HeroValidator.isValid(req.user, hero)
@@ -30,7 +30,7 @@ exports.init = (app) ->
         else
           console.log "Successfully updated hero "+req.params.id
 
-  app.get 'api/hero/:id', (req, res) ->
+  app.get '/api/hero/:id', (req, res) ->
     user = req.user
 
     if not user.hasHero req.params.id
@@ -42,14 +42,19 @@ exports.init = (app) ->
         return hero
 
   # Returns meta-data about hero types
-  app.get 'api/meta/hero', (req, res) ->
-    fs.readdir '../../game/heroes', (err, files) ->
+  app.get '/api/meta/hero', (req, res) ->
+    fs.readdir __dirname+'/../../game/heroes', (err, files) ->
       if err?
-        return
+        res.send 500, err
       else
         metadatas = []
         for file in files
-          metadatas.push(require(file).GetMetaData())
+          try
+            metadatas.push(require('../../game/heroes/'+file).GetMetaData())
+          catch error
+            console.log 'error getting metadata for '+file
+            console.log 'error: '+error
+        res.json(metadatas)
 
 
   console.log 'Initialized hero controller.'

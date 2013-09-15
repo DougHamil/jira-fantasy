@@ -1,0 +1,14 @@
+doctype 5
+html(lang="en")
+	head
+		title= pageTitle
+	body
+		h1 JIRA Heroes
+		p
+			if user
+				|Welcome to JIRA Heroes,
+				= ' ' + user
+			else
+				|Please 
+				a(href="/user/login.html") login
+				= ' to JIRA Heroes'

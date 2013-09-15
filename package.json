@@ -9,6 +9,7 @@
 		"mongodb" : "x",
 		"socket.io" : "x",
 		"session.socket.io": "x",
-		"mongoose": "x"
+		"mongoose": "x",
+		"jade": "x"
 	}
 }

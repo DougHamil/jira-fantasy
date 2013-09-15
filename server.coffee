@@ -3,6 +3,7 @@ express        = require 'express'
 jiraapi        = require './lib/jira/api'
 userController = require './lib/controllers/user'
 heroController = require './lib/controllers/hero'
+viewsController= require './lib/controllers/views'
 gameServer     = require './game/server'
 
 secret       = 'JIRA_HERO_SECRET'
@@ -20,22 +21,23 @@ db.once 'open', ->
   app.use express.cookieParser()
   app.use express.session({store:sessionStore, secret: secret, key:'express.sid'})
   app.use express.static('public')
+  app.set 'views', __dirname + '/views'
+  app.set 'view engine', 'jade'
+#
+# Init controllers
+  userController.init app
 
   app.all '/api/*', (req, res, next) ->
-    console.log req.path
-    if req.path != '/api/user/login'
-      if not req.session.user?
-        console.log "API request attempt for invalid user"
-        res.redirect '/user/info'
-      else
-        req.user = req.session.user
-        next()
+    console.log 'API request: '+req.path
+    if not req.session.user?
+      console.log "User is not logged in, redirecting to login."
+      req.session.redir = req.path
+      res.redirect '/user/login.html'
     else
-      console.log 'Login request'
-      console.log next
+      req.user = req.session.user
       next()
-
-  # Init controllers
-  userController.init app
+#
   heroController.init app
+  viewsController.init app
+
   gameServer.init app.listen(3000), sessionStore, cookieParser
