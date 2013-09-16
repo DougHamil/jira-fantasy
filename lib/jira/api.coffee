@@ -1,29 +1,11 @@
 http = require 'http'
-
-STORY_POINTS_FIELD = 'customfield_10002'
-
-authHeader = (username, password) ->
-  return "Basic "+new Buffer(username + ":" + password).toString('base64')
-
-closedIssuesQuery = (username, time) ->
-  return encodeURIComponent('assignee="'+username+'" AND Status WAS NOT "Closed" BEFORE "'+time+'" AND Status = "Closed"')
-
-tryParseResponse = (cb) ->
-  return (res) ->
-    data = ''
-    res.on 'data', (chunk) ->
-      data += chunk
-    res.on 'end', () ->
-      try
-        cb null, JSON.parse(data)
-      catch err
-        cb err, data
+CONFIG = require '../config'
 
 getClosedIssuesSince = (time, username, password, cb) ->
   http.request(
     {
-      host: 'jira'
-      port:8080
+      host: CONFIG.JIRA_HOST
+      port: CONFIG.JIRA_PORT
       path:'/rest/api/2/search?fields='+STORY_POINTS_FIELD+'&jql='+closedIssuesQuery(username, time)
       headers:
         'Authorization': authHeader(username, password)
@@ -48,14 +30,31 @@ exports.getTotalStoryPointsSince = (time, ignoreIssueKeys, username, password, c
 exports.getUser = (username, password, cb) ->
   http.request(
     {
-      host: 'jira'
-      port:8080
+      host: CONFIG.JIRA_HOST
+      port: CONFIG.JIRA_PORT
       path: '/rest/api/2/user?username='+username
       headers:
         'Authorization': "Basic " + new Buffer(username + ":" + password).toString('base64')
     }
     , tryParseResponse(cb))
   .end()
+
+tryParseResponse = (cb) ->
+  return (res) ->
+    data = ''
+    res.on 'data', (chunk) ->
+      data += chunk
+    res.on 'end', () ->
+      try
+        cb null, JSON.parse(data)
+      catch err
+        cb err, data
+
+authHeader = (username, password) ->
+  return "Basic "+new Buffer(username + ":" + password).toString('base64')
+
+closedIssuesQuery = (username, time) ->
+  return encodeURIComponent('assignee="'+username+'" AND Status WAS NOT "Closed" BEFORE "'+time+'" AND Status = "Closed"')
 
 exports.getDateTime = ->
   date = new Date()
