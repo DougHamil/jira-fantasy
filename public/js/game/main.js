@@ -11,9 +11,11 @@
 
   require(['jquery', 'jiraheroes'], function($, JH) {
     return $(document).ready(function() {
-      console.log("Document is ready, requesting user.");
+      JH.GetHeroes(function(heroes) {
+        return console.log(heroes);
+      });
       return JH.GetUser(function(user) {
-        console.log("Received user info: " + user);
+        window.user = user;
         return console.log("" + user.name + " has " + user.points + " points");
       });
     });

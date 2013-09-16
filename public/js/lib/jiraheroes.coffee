@@ -1,13 +1,13 @@
 define ['jquery'], ($) ->
-  class JiraHeroes
-    @GetUser: (cb) ->
+  return {
+    GetUser: (cb) ->
       $.ajax
         url: '/user/info'
       .done (data) ->
         cb data
-  return JiraHeroes
-
-
-
-
-
+    GetHeroes: (cb) ->
+      $.ajax
+        url: '/api/hero'
+      .done (data) ->
+        cb data
+  }

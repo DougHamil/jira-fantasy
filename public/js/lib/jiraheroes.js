@@ -1,23 +1,22 @@
 (function() {
 
   define(['jquery'], function($) {
-    var JiraHeroes;
-    JiraHeroes = (function() {
-
-      function JiraHeroes() {}
-
-      JiraHeroes.GetUser = function(cb) {
+    return {
+      GetUser: function(cb) {
         return $.ajax({
           url: '/user/info'
         }).done(function(data) {
           return cb(data);
         });
-      };
-
-      return JiraHeroes;
-
-    })();
-    return JiraHeroes;
+      },
+      GetHeroes: function(cb) {
+        return $.ajax({
+          url: '/api/hero'
+        }).done(function(data) {
+          return cb(data);
+        });
+      }
+    };
   });
 
 }).call(this);

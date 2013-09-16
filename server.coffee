@@ -32,7 +32,7 @@ db.once 'open', ->
     if not req.session.user?
       console.log "User is not logged in, redirecting to login."
       req.session.redir = req.path
-      res.redirect '/user/login.html'
+      res.redirect '/login'
     else
       req.user = req.session.user
       next()

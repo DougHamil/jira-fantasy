@@ -7,8 +7,10 @@ require.config
 
 require ['jquery', 'jiraheroes'], ($, JH) ->
   $(document).ready ->
-    console.log "Document is ready, requesting user."
+    JH.GetHeroes (heroes) ->
+      console.log heroes
+
     JH.GetUser (user) ->
-      console.log "Received user info: "+user
+      window.user = user
       console.log "#{user.name} has #{user.points} points"
 

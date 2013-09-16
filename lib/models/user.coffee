@@ -6,7 +6,7 @@ schema = new Schema
   name: String
   email: String
   lastLogin: String
-  heroes: [{id:ObjectId}]
+  heroes: [{type:ObjectId, ref:'Hero'}]
   decks: [ObjectId]             # Links to this user's deck library
   lastLoginIssueKeys: [String]
   points:

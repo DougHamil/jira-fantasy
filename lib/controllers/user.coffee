@@ -1,5 +1,10 @@
 Jira = require '../jira/api'
 User = require '../models/user'
+ModelHelper = require '../models/helper'
+
+exports.getUserModel = (user, cb) ->
+  User.findOne {_id:user._id}, (err, userModel) ->
+    cb userModel
 
 exports.get = (session) ->
   return session.user
@@ -43,8 +48,8 @@ exports.init = (app) ->
           req.session.user = user
           if not user?
             console.log "#{jiraData.name} is a new user, building new user from JIRA data..."
-            if data.name?
-              user = new User({name: jiraData.name, email: jiraData.emailAddress})
+            if jiraData.name?
+              user = new User({name: jiraData.name, email: jiraData.emailAddress, lastLogin:Jira.getDateTime()})
               user.save (err) ->
                 if err?
                   console.log "Error saving user: "+err
@@ -63,7 +68,9 @@ exports.init = (app) ->
 
   app.get '/user/info', (req, res) ->
     if req.session.user?
-        res.send req.session.user
+      User.findOne {_id:req.session.user._id}, (err, user) ->
+        ModelHelper.deepPopulate user, 'heroes heroes.class decks', {}, ->
+          res.send user
     else
       res.redirect '/login'
 
