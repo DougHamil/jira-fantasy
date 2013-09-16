@@ -1,5 +1,6 @@
 UserController = require './user'
 Hero           = require '../models/hero'
+HeroClass      = require '../models/hero.class'
 HeroValidator  = require '../validators/hero'
 fs             = require 'fs'
 

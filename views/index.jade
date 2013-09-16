@@ -1,14 +1,20 @@
 doctype 5
 html(lang="en")
 	head
-		title= pageTitle
+		title JIRA Heroes
+		script(src="/js/lib/require.js",data-main="js/game/main.js")
 	body
 		h1 JIRA Heroes
 		p
 			if user
-				|Welcome to JIRA Heroes,
-				= ' ' + user
+				p
+					|Welcome to JIRA Heroes,
+					= ' ' + user.name
+				p
+					|You have
+					= ' ' + user.points + ' '
+					|points
 			else
 				|Please 
-				a(href="/user/login.html") login
+				a(href="/login") login
 				= ' to JIRA Heroes'

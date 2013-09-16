@@ -6,7 +6,7 @@ schema = new Schema
   name:                   #Name of this player's hero
     type: String
     default: 'Unnamed'
-  class: ObjectId         #Link to HeroClass
+  class: String           #Link to HeroClass
   level: Number           #Hero's current level
   xp: Number              #Hero's current xp
   abilities: [ObjectId]   #Hero's current available powers (unlocked with levels)
