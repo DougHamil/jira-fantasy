@@ -16,7 +16,8 @@
       });
       return JH.GetUser(function(user) {
         window.user = user;
-        return console.log("" + user.name + " has " + user.points + " points");
+        console.log("" + user.name + " has " + user.points + " points");
+        return $("#message").text("You have earned " + user.points + " points since your last login on " + user.lastLogin);
       });
     });
   });

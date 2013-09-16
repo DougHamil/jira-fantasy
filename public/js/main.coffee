@@ -13,4 +13,5 @@ require ['jquery', 'jiraheroes'], ($, JH) ->
     JH.GetUser (user) ->
       window.user = user
       console.log "#{user.name} has #{user.points} points"
+      $("#message").text("You have earned #{user.points} points since your last login on #{user.lastLogin}")
 

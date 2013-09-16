@@ -6,7 +6,7 @@ getClosedIssuesSince = (time, username, password, cb) ->
     {
       host: CONFIG.JIRA_HOST
       port: CONFIG.JIRA_PORT
-      path:'/rest/api/2/search?fields='+STORY_POINTS_FIELD+'&jql='+closedIssuesQuery(username, time)
+      path:'/rest/api/2/search?fields='+CONFIG.STORY_POINTS_FIELD+'&jql='+closedIssuesQuery(username, time)
       headers:
         'Authorization': authHeader(username, password)
     }, tryParseResponse(cb)
@@ -23,7 +23,7 @@ exports.getTotalStoryPointsSince = (time, ignoreIssueKeys, username, password, c
       points = 0
       for issue in json.issues
         if issue.key not in ignoreIssueKeys
-          points += issue.fields[STORY_POINTS_FIELD] ? 0
+          points += issue.fields[CONFIG.STORY_POINTS_FIELD] ? 0
         keys.push(issue.key)
       cb null, points, keys
 

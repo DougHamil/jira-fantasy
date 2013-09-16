@@ -1,8 +1,6 @@
 doctype 5
 html(lang="en")
-	head
-		title JIRA Heroes
-		script(src="/js/lib/require.js",data-main="js/game/main.js")
+	include includes/head
 	body
 		h1 JIRA Heroes
 		p
@@ -10,8 +8,9 @@ html(lang="en")
 				p
 					|Welcome to JIRA Heroes,
 					= ' ' + user.name
-				p Loading, please wait...
+				p#message Loading, please wait...
 			else
 				|Please 
 				a(href="/login") login
 				= ' to JIRA Heroes'
+		include includes/footer

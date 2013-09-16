@@ -22,6 +22,7 @@ onUserLoggedIn = (req, res, username, password, user) ->
   Jira.getTotalStoryPointsSince lastLogin, lastLoginIssueKeys, username, password, (err, points, keys) ->
     if not err?
       user.points += points
+      user.lastLoginPoints = points
       user.lastLoginIssueKeys = keys
       user.lastLogin = currentTime
       console.log "User #{user.name} has earned #{points} points since last logging on #{lastLogin}"
@@ -64,7 +65,7 @@ exports.init = (app) ->
 
   app.get '/user/logout', (req, res) ->
     req.session.user = null
-    res.send 'Successfully logged out.'
+    res.redirect '/'
 
   app.get '/user/info', (req, res) ->
     if req.session.user?
