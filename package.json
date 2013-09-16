@@ -1,6 +1,6 @@
 {
-	"name": "jira-heroes",
-	"description": "Jira Heroes",
+	"name": "jira-fantasy",
+	"description": "Jira Fantasy",
 	"version": "0.0.1",
 	"private": true,
 	"dependencies":{

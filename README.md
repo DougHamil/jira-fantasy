@@ -1,2 +1,2 @@
-jira-heroes
+jira-fantasy
 ===========
